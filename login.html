@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Daxil ol — 大鹏 DP</title>
+<meta name="description" content="大鹏 DP hesabınıza daxil olun və gündəlik gəlirinizi idarə edin." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+<script>window.NEXORA_BACKEND_URL = localStorage.getItem('nexora_backend_url') || '';</script>
+</head>
+<body>
+
+<div class="bg-glow"></div>
+<div class="bg-grid"></div>
+
+<!-- ============ HEADER ============ -->
+<header id="header">
+  <div class="container nav">
+    <a href="index.html" class="logo">
+      <span class="logo-mark">N</span>
+      <span>大鹏 DP</span>
+    </a>
+    <nav class="nav-links" aria-label="Əsas naviqasiya">
+      <a href="index.html#paketler">Paketlər</a>
+      <a href="index.html#nece-isleyir">Necə işləyir</a>
+      <a href="haqqimizda.html">Haqqımızda</a>
+      <a href="elaqe.html">Əlaqə</a>
+    </nav>
+    <div class="nav-cta">
+      <a href="login.html" class="btn btn-ghost">Daxil ol</a>
+      <a href="index.html#paketler" class="btn btn-primary">Paketi al</a>
+      <button class="menu-btn" id="menuBtn" aria-label="Menyunu aç" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ============ MOBILE MENU ============ -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html#paketler">Paketlər</a>
+  <a href="index.html#nece-isleyir">Necə işləyir</a>
+  <a href="haqqimizda.html">Haqqımızda</a>
+  <a href="elaqe.html">Əlaqə</a>
+  <a href="login.html">Daxil ol</a>
+  <a href="qeydiyyat.html" style="color: var(--accent);">Hesab yarat</a>
+</div>
+
+<!-- ============ AUTH SECTION ============ -->
+<section class="auth-section">
+  <div class="container">
+    <div class="auth-card reveal visible">
+      <a href="index.html" class="logo">
+        <span class="logo-mark">N</span>
+        <span>Nexora</span>
+      </a>
+      <h2>Xoş gəldiniz!</h2>
+      <p class="auth-sub">Hesabınıza daxil olun və gündəlik gəlirinizi izləyin.</p>
+
+      <form id="loginForm" novalidate>
+        <div class="form-group">
+          <label class="form-label" for="email">E-poçt</label>
+          <input class="form-input" type="email" id="email" name="email" placeholder="siz@shirket.az" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="password">Şifrə</label>
+          <input class="form-input" type="password" id="password" name="password" placeholder="••••••••" required minlength="6" />
+        </div>
+        <div class="form-row">
+          <label><input type="checkbox" name="remember" /> Məni xatırla</label>
+          <a href="login.html#">Şifrəni unutdun?</a>
+        </div>
+        <button class="btn btn-primary btn-block btn-lg" type="submit">Daxil ol</button>
+      </form>
+
+      <p class="auth-alt">Hesabınız yoxdur? <a href="qeydiyyat.html">Pulsuz qeydiyyatdan keçin</a></p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo">
+          <span class="logo-mark">N</span>
+          <span>Nexora</span>
+        </a>
+        <p>Gündəlik gəlir əldə etməyin sadə və etibarlı yolu. Paket seçin, investisiya edin, hər gün qazanın.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Platforma</h4>
+        <a href="index.html#paketler">Paketlər</a>
+        <a href="index.html#nece-isleyir">Necə işləyir</a>
+        <a href="index.html#reyler">Rəylər</a>
+      </div>
+      <div class="footer-col">
+        <h4>Şirkət</h4>
+        <a href="haqqimizda.html">Haqqımızda</a>
+        <a href="elaqe.html">Əlaqə</a>
+      </div>
+      <div class="footer-col">
+        <h4>Əlaqə</h4>
+        <a href="elaqe.html">hello@nexora.az</a>
+        <a href="elaqe.html">+994 12 555 55 55</a>
+        <a href="elaqe.html">Nizami küç. 180, Bakı</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© <span id="year">2026</span> Nexora. Bütün hüquqlar qorunur.</p>
+      <p><a href="mexfilik.html">Məxfilik siyasəti</a> &nbsp;·&nbsp; <a href="istifade-sertleri.html">İstifadə şərtləri</a></p>
+    </div>
+  </div>
+</footer>
+
+<script src="api.js"></script>
+<script src="script.js"></script>
+<script>
+  // Klient tərəfli form validasiyası və giriş (backend varsa real login, yoxdursa demo)
+  (function () {
+    var form = document.getElementById('loginForm');
+    if (!form) return;
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      var email = document.getElementById('email');
+      var password = document.getElementById('password');
+      var isValid = true;
+
+      [email, password].forEach(function (input) {
+        input.style.borderColor = '';
+      });
+
+      if (!email.value || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
+        email.style.borderColor = '#ff6b6b';
+        isValid = false;
+      }
+      if (!password.value || password.value.length < 6) {
+        password.style.borderColor = '#ff6b6b';
+        isValid = false;
+      }
+      if (!isValid) return;
+
+      var btn = form.querySelector('button[type="submit"]');
+      var oldText = btn.textContent;
+      btn.disabled = true;
+      btn.textContent = 'Daxil olunur...';
+
+      try {
+        if (!window.NexoraAPI) throw new Error('Server bağlantısı tapılmadı.');
+        await window.NexoraAPI.detect();
+        if (!window.NexoraAPI.isUp()) throw new Error('Server işə düşməyib. Bir az sonra yenidən yoxlayın.');
+        await window.NexoraAPI.login(email.value, password.value);
+        var pendingPurchase = localStorage.getItem('nexora_pending_purchase');
+        window.location.href = pendingPurchase ? 'index.html?resumePurchase=1' : 'dashboard.html';
+      } catch (err) {
+        btn.disabled = false;
+        btn.textContent = oldText;
+        var alertEl = document.createElement('div');
+        alertEl.className = 'auth-alert error';
+        alertEl.textContent = err.message === 'offline' ? 'Server işə düşməyib — demo rejimdə davam edilir.' : err.message;
+        form.insertBefore(alertEl, form.firstChild);
+        setTimeout(function () { if (alertEl.parentNode) alertEl.remove(); }, 4000);
+      }
+    });
+  })();
+</script>
+</body>
+</html>

@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Mənim panelim — 大鹏 DP</title>
+<meta name="description" content="大鹏 DP istifadəçi paneli — balansınızı və gündəlik gəlirinizi izləyin." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+<script>window.NEXORA_BACKEND_URL = localStorage.getItem('nexora_backend_url') || '';</script>
+</head>
+<body>
+
+<div class="bg-glow"></div>
+<div class="bg-grid"></div>
+
+<!-- ============ HEADER ============ -->
+<header id="header">
+  <div class="container nav">
+    <a href="index.html" class="logo">
+      <span class="logo-mark">N</span>
+      <span>大鹏 DP</span>
+    </a>
+    <nav class="nav-links" aria-label="Əsas naviqasiya">
+      <a href="index.html#paketler">Paketlər</a>
+      <a href="index.html#nece-isleyir">Necə işləyir</a>
+      <a href="faq.html">FAQ</a>
+      <a href="haqqimizda.html">Haqqımızda</a>
+      <a href="elaqe.html">Əlaqə</a>
+    </nav>
+    <div class="nav-cta">
+      <a href="dashboard.html" class="btn btn-ghost">Panelim</a>
+      <a href="index.html#paketler" class="btn btn-primary">Paketi al</a>
+      <button class="menu-btn" id="menuBtn" aria-label="Menyunu aç" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ============ MOBILE MENU ============ -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html#paketler">Paketlər</a>
+  <a href="index.html#nece-isleyir">Necə işləyir</a>
+  <a href="faq.html">FAQ</a>
+  <a href="haqqimizda.html">Haqqımızda</a>
+  <a href="elaqe.html">Əlaqə</a>
+  <a href="login.html">Daxil ol</a>
+  <a href="index.html#paketler" style="color: var(--accent);">Paketi al</a>
+</div>
+
+<!-- ============ DASHBOARD ============ -->
+<section class="dash-section">
+  <div class="container">
+    <div class="dash-head reveal visible">
+      <h1>Xoş gəldiniz, <span style="color: var(--accent);">Elvin!</span></h1>
+      <div class="user-chip">
+        <span class="dash-avatar">E</span>
+        Elvin Məmmədov
+      </div>
+    </div>
+
+    <!-- Balance cards -->
+    <div class="balance-grid">
+      <div class="balance-card reveal visible">
+        <div class="label">Ümumi balans</div>
+        <div class="value accent" id="totalBalance">₼0.00</div>
+        <div class="sub">Çıxarış üçün əlçatandır</div>
+      </div>
+      <div class="balance-card reveal visible reveal-delay-1">
+        <div class="label">Bugünkü gəlir</div>
+        <div class="value" id="todayEarning">₼0.00</div>
+        <div class="sub">Avtomatik hesablanır</div>
+      </div>
+      <div class="balance-card reveal visible reveal-delay-2">
+        <div class="label">Aktiv paketlər</div>
+        <div class="value" id="activePlans">0</div>
+        <div class="sub">Aktiv investisiyalar</div>
+      </div>
+      <div class="balance-card reveal visible reveal-delay-3">
+        <div class="label">Ümumi gəlir</div>
+        <div class="value accent" id="totalEarned">₼0.00</div>
+        <div class="sub">Bütün dövr ərzində</div>
+      </div>
+    </div>
+
+    <!-- Wallet / Withdraw -->
+    <div class="wallet-panel reveal visible">
+      <div class="wallet-balance-row">
+        <div>
+          <div class="wallet-balance-label">Cüzdan balansı</div>
+          <div class="wallet-balance-amount" id="walletBalance">₼0.00</div>
+          <div class="wallet-balance-sub">Çıxarış üçün əlçatan — minimum 1₼</div>
+        </div>
+        <span class="tag" style="font-size:12px; font-weight:700; padding:6px 14px; border-radius:999px; background:rgba(200,240,76,.12); border:1px solid rgba(200,240,76,.3); color:var(--accent);">CANLI</span>
+      </div>
+
+      <div class="withdraw-grid">
+        <div class="withdraw-field">
+          <label for="withdrawMethod">Çıxarış üsulu</label>
+          <select class="form-input" id="withdrawMethod">
+            <option value="card">Bank kartı (VISA / Mastercard)</option>
+            <option value="m10">m10 · E-Wallet</option>
+            <option value="crypto">USDT (TRC-20)</option>
+          </select>
+        </div>
+        <div class="withdraw-field">
+          <label for="withdrawTarget">Kart / nömrə / cüzdan ünvanı</label>
+          <input type="text" class="form-input" id="withdrawTarget" placeholder="Və ya ödəniş detallarınızı daxil edin">
+        </div>
+        <div class="withdraw-field">
+          <label for="withdrawAmount">Məbləğ (₼)</label>
+          <input type="number" class="form-input" id="withdrawAmount" min="1" step="0.01" placeholder="1.00">
+        </div>
+        <div class="withdraw-field">
+          <label>&nbsp;</label>
+          <div class="withdraw-actions">
+            <button class="btn btn-primary" id="withdrawBtn" type="button">Çıxarış et</button>
+            <button class="btn btn-ghost" id="withdrawMaxBtn" type="button">Hamısını çıxar</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="withdraw-msg" id="withdrawMsg"></div>
+      <div class="withdraw-hint">Çıxarış sorğuları orta hesabla 10 dəqiqə ərzində emal edilir. Komissiya: 0₼.</div>
+    </div>
+
+    <div class="wallet-panel telegram-panel reveal visible" id="telegramPanel">
+      <div class="wallet-balance-row">
+        <div>
+          <h3>Telegram bildirişləri</h3>
+          <div class="wallet-balance-sub" id="telegramStatus">Telegram hesabı qoşulmayıb.</div>
+        </div>
+        <div class="withdraw-actions">
+          <button class="btn btn-primary" id="telegramCodeBtn" type="button">Telegram kodu al</button>
+          <button class="btn btn-ghost" id="telegramDisconnectBtn" type="button" hidden>Ayır</button>
+        </div>
+      </div>
+      <div id="telegramCodeBox" class="telegram-code-box" hidden>
+        <code id="telegramCode"></code>
+        <a id="telegramBotLink" class="btn btn-ghost" href="#" target="_blank" rel="noopener noreferrer">Botu aç</a>
+        <div class="withdraw-hint">Botda /start yazın, sonra bu kodu ona göndərin. Kod 15 dəqiqə qüvvədədir.</div>
+      </div>
+      <div class="withdraw-msg" id="telegramMsg" role="status" aria-live="polite"></div>
+    </div>
+
+    <div class="dash-cards">
+      <!-- Active plans -->
+      <div class="dash-panel reveal visible">
+        <h3>Aktiv paketlərim</h3>
+        <div class="active-plan">
+          <div>
+            <div class="plan-name">Standart · 30₼</div>
+            <div class="plan-meta">Aktivləşmə: 12 Avqust 2026</div>
+          </div>
+          <span class="tag">AKTİV</span>
+        </div>
+        <div class="earn-rate">
+          <span style="font-size: 14px; color: var(--text-dim);">Gündəlik gəlir dərəcəsi</span>
+          <span class="big">+₼5 / gün</span>
+        </div>
+        <a href="index.html#paketler" class="btn btn-ghost btn-block">Yeni paket al</a>
+      </div>
+
+      <!-- Earnings history -->
+      <div class="dash-panel reveal visible reveal-delay-1">
+        <h3>Çıxarış tarixçəsi</h3>
+        <div id="withdrawHistoryEmpty" style="font-size: 14px; color: var(--text-dim); padding: 20px 0; text-align: center;">Hələ çıxarış etməmisiniz. Yuxarıdakı cüzdandan ilk çıxarışınızı edin.</div>
+        <div id="withdrawHistory"></div>
+      </div>
+        <div class="history-row">
+          <div>
+            <div>Gündəlik gəlir</div>
+            <div class="date">13 Avqust 2026 · 00:00</div>
+          </div>
+          <span class="amount">+₼5.00</span>
+        </div>
+        <div class="history-row">
+          <div>
+            <div>Gündəlik gəlir</div>
+            <div class="date">12 Avqust 2026 · 00:00</div>
+          </div>
+          <span class="amount">+₼5.00</span>
+        </div>
+        <div class="history-row">
+          <div>
+            <div>Gündəlik gəlir</div>
+            <div class="date">11 Avqust 2026 · 00:00</div>
+          </div>
+          <span class="amount">+₼5.00</span>
+        </div>
+        <div class="history-row">
+          <div>
+            <div>Gündəlik gəlir</div>
+            <div class="date">10 Avqust 2026 · 00:00</div>
+          </div>
+          <span class="amount">+₼5.00</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo">
+          <span class="logo-mark">N</span>
+          <span>Nexora</span>
+        </a>
+        <p>Gündəlik gəlir əldə etməyin sadə və etibarlı yolu. Paket seçin, investisiya edin, hər gün qazanın.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Platforma</h4>
+        <a href="index.html#paketler">Paketlər</a>
+        <a href="index.html#nece-isleyir">Necə işləyir</a>
+        <a href="faq.html">FAQ</a>
+      </div>
+      <div class="footer-col">
+        <h4>Şirkət</h4>
+        <a href="haqqimizda.html">Haqqımızda</a>
+        <a href="karyera.html">Karyera</a>
+        <a href="elaqe.html">Əlaqə</a>
+      </div>
+      <div class="footer-col">
+        <h4>Əlaqə</h4>
+        <a href="elaqe.html">hello@nexora.az</a>
+        <a href="elaqe.html">+994 12 555 55 55</a>
+        <a href="elaqe.html">Nizami küç. 180, Bakı</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© <span id="year">2026</span> Nexora. Bütün hüquqlar qorunur.</p>
+      <p><a href="mexfilik.html">Məxfilik siyasəti</a> &nbsp;·&nbsp; <a href="istifade-sertleri.html">İstifadə şərtləri</a></p>
+    </div>
+  </div>
+</footer>
+
+<script src="api.js"></script>
+<script src="script.js"></script>
+<script>
+  // Demo məlumatlarla və ödənilmiş paketlə balans hesablanması
+  // Backend işə düşəndə real bazadan məlumat gəlir, yoxdursa localStorage demo.
+  (async function () {
+    var api = window.NexoraAPI;
+    if (api) await api.detect();
+    var usingBackend = api && api.isUp() && api.getToken();
+
+    function getLocalDayKey(date) {
+      var offset = date.getTimezoneOffset() * 60000;
+      return new Date(date.getTime() - offset).toISOString().slice(0, 10);
+    }
+
+    function getDailyCreditState() {
+      try {
+        return JSON.parse(localStorage.getItem('nexora_daily_credit_state') || '{}');
+      } catch (e) {
+        return {};
+      }
+    }
+
+    function setDailyCreditState(state) {
+      try { localStorage.setItem('nexora_daily_credit_state', JSON.stringify(state)); } catch (e) {}
+    }
+
+    function applyDailyAccrual() {
+      if (usingBackend) return;
+      var state = getDailyCreditState();
+      var todayKey = getLocalDayKey(new Date());
+      var lastDate = state.lastDate || todayKey;
+      var elapsedDays = lastDate === todayKey ? 0 : Math.max(0, Math.round((new Date(todayKey).getTime() - new Date(lastDate).getTime()) / 86400000));
+      if (elapsedDays > 0 && plan && plan.daily) {
+        totalEarned += plan.daily * elapsedDays;
+        totalBalance += plan.daily * elapsedDays;
+        state.lastDate = todayKey;
+        setDailyCreditState(state);
+      }
+      if (!state.lastDate) {
+        state.lastDate = todayKey;
+        setDailyCreditState(state);
+      }
+    }
+
+    var plan = { name: 'Standart', price: 30, daily: 5, activatedAt: '12 Avqust 2026' };
+    try {
+      var saved = localStorage.getItem('nexora_active_plan');
+      if (saved) {
+        var parsed = JSON.parse(saved);
+        if (parsed && parsed.daily) {
+          plan = parsed;
+        }
+      }
+    } catch (e) {}
+
+    var daysActive = 4;
+    var totalEarned = plan.daily * daysActive;
+    var totalBalance = totalEarned;
+    var serverData = null;
+
+    if (usingBackend) {
+      try {
+        serverData = await api.me();
+        // User name in header
+        var nameEl = document.querySelector('.dash-head h1 span');
+        var chipEl = document.querySelector('.user-chip');
+        var first = (serverData.user.fullname || '').split(' ')[0] || 'İstifadəçi';
+        if (nameEl) nameEl.textContent = first + '!';
+        if (chipEl) {
+          var chipText = chipEl.lastChild;
+          if (chipText && chipText.nodeType === 3) chipText.textContent = ' ' + serverData.user.fullname;
+        }
+        if (serverData.purchases && serverData.purchases.length) {
+          var last = serverData.purchases[0];
+          plan = { name: last.plan_name, price: last.price, daily: last.daily, activatedAt: last.created_at };
+        } else {
+          plan = { name: 'Aktiv paket yoxdur', price: 0, daily: 0, activatedAt: '' };
+        }
+        totalEarned = serverData.totalEarned;
+        totalBalance = serverData.balance;
+        document.getElementById('activePlans').textContent = String(serverData.purchases.length);
+      } catch (e) { usingBackend = false; }
+    }
+
+    if (!usingBackend) {
+      applyDailyAccrual();
+      var dailyCreditState = getDailyCreditState();
+      if (!dailyCreditState.lastDate) {
+        dailyCreditState.lastDate = getLocalDayKey(new Date());
+        setDailyCreditState(dailyCreditState);
+      }
+    }
+
+    document.getElementById('totalBalance').textContent = '₼' + totalBalance.toFixed(2);
+    document.getElementById('todayEarning').textContent = '₼' + plan.daily.toFixed(2);
+    if (!usingBackend) document.getElementById('activePlans').textContent = '1';
+    document.getElementById('totalEarned').textContent = '₼' + totalEarned.toFixed(2);
+
+    var planNameEl = document.querySelector('.active-plan .plan-name');
+    var planMetaEl = document.querySelector('.active-plan .plan-meta');
+    var earnRateEl = document.querySelector('.earn-rate .big');
+
+    if (planNameEl) planNameEl.textContent = plan.price ? plan.name + ' · ' + plan.price + '₼' : (plan.name || 'Standart');
+    if (planMetaEl) planMetaEl.textContent = plan.activatedAt ? 'Aktivləşmə: ' + plan.activatedAt : 'Təsdiqlənmiş paket yoxdur';
+    if (earnRateEl) earnRateEl.textContent = '+₼' + (plan.daily || 0) + ' / gün';
+
+    // Sync history rows with the purchased plan's daily rate
+    document.querySelectorAll('.history-row .amount').forEach(function (el) {
+      el.textContent = '+₼' + (plan.daily || 0).toFixed(2);
+    });
+
+    // ---------- WALLET / WITHDRAW ----------
+    var WITHDRAW_KEY = 'nexora_withdrawals';
+    var walletBalanceEl = document.getElementById('walletBalance');
+    var withdrawMethodEl = document.getElementById('withdrawMethod');
+    var withdrawTargetEl = document.getElementById('withdrawTarget');
+    var withdrawAmountEl = document.getElementById('withdrawAmount');
+    var withdrawBtn = document.getElementById('withdrawBtn');
+    var withdrawMaxBtn = document.getElementById('withdrawMaxBtn');
+    var withdrawMsg = document.getElementById('withdrawMsg');
+    var withdrawHistoryEl = document.getElementById('withdrawHistory');
+    var withdrawHistoryEmpty = document.getElementById('withdrawHistoryEmpty');
+    var telegramCodeBtn = document.getElementById('telegramCodeBtn');
+    var telegramDisconnectBtn = document.getElementById('telegramDisconnectBtn');
+    var telegramCodeBox = document.getElementById('telegramCodeBox');
+    var telegramCodeEl = document.getElementById('telegramCode');
+    var telegramBotLink = document.getElementById('telegramBotLink');
+    var telegramStatusEl = document.getElementById('telegramStatus');
+    var telegramMsg = document.getElementById('telegramMsg');
+
+    function showTelegramMessage(text, ok) {
+      if (!telegramMsg) return;
+      telegramMsg.className = 'withdraw-msg ' + (ok ? 'ok' : 'err');
+      telegramMsg.textContent = text;
+    }
+
+    function setTelegramConnected(connected) {
+      if (telegramStatusEl) telegramStatusEl.textContent = connected ? 'Telegram hesabı qoşulub.' : 'Telegram hesabı qoşulmayıb.';
+      if (telegramCodeBtn) telegramCodeBtn.hidden = connected;
+      if (telegramDisconnectBtn) telegramDisconnectBtn.hidden = !connected;
+      if (telegramCodeBox) telegramCodeBox.hidden = true;
+    }
+
+    setTelegramConnected(!!(serverData && serverData.user && serverData.user.telegram_chat_id));
+
+    if (telegramCodeBtn) telegramCodeBtn.addEventListener('click', async function () {
+      telegramCodeBtn.disabled = true;
+      showTelegramMessage('Kod hazırlanır...', true);
+      try {
+        var result = await api.telegramStart();
+        if (!result.botUsername) throw new Error('Telegram bot adı serverdə konfiqurasiya edilməyib.');
+        if (telegramCodeEl) telegramCodeEl.textContent = result.code;
+        if (telegramBotLink) telegramBotLink.href = 'https://t.me/' + result.botUsername;
+        if (telegramCodeBox) telegramCodeBox.hidden = false;
+        if (telegramStatusEl) telegramStatusEl.textContent = 'Botda /start yazın, sonra göstərilən kodu göndərin.';
+        showTelegramMessage('Birdəfəlik kod yaradıldı.', true);
+      } catch (error) {
+        showTelegramMessage(error.message || 'Telegram kodu alınmadı.', false);
+      } finally {
+        telegramCodeBtn.disabled = false;
+      }
+    });
+
+    if (telegramDisconnectBtn) telegramDisconnectBtn.addEventListener('click', async function () {
+      telegramDisconnectBtn.disabled = true;
+      try {
+        await api.telegramDisconnect();
+        setTelegramConnected(false);
+        showTelegramMessage('Telegram hesabı ayrıldı.', true);
+      } catch (error) {
+        showTelegramMessage(error.message || 'Telegram hesabı ayrılmadı.', false);
+      } finally {
+        telegramDisconnectBtn.disabled = false;
+      }
+    });
+
+    function getWithdrawals() {
+      try { return JSON.parse(localStorage.getItem(WITHDRAW_KEY) || '[]'); } catch (e) { return []; }
+    }
+    function saveWithdrawals(list) {
+      try { localStorage.setItem(WITHDRAW_KEY, JSON.stringify(list)); } catch (e) {}
+    }
+
+    function getWalletBalance() {
+      var total = totalEarned;
+      getWithdrawals().forEach(function (w) { total -= w.amount; });
+      return Math.max(0, total);
+    }
+
+    function renderWallet() {
+      var balance = getWalletBalance();
+      if (walletBalanceEl) walletBalanceEl.textContent = '₼' + balance.toFixed(2);
+      renderWithdrawHistory();
+    }
+
+    function renderWithdrawHistory(list) {
+      if (!withdrawHistoryEl) return;
+      if (!list) list = getWithdrawals().slice().reverse();
+      var rows = list.map(function (w) {
+        return {
+          method: w.method,
+          target: w.target,
+          amount: w.amount,
+          date: w.date || (w.created_at || '').slice(0, 10)
+        };
+      });
+      if (withdrawHistoryEmpty) withdrawHistoryEmpty.style.display = rows.length === 0 ? 'block' : 'none';
+      withdrawHistoryEl.innerHTML = '';
+      rows.forEach(function (w) {
+        var row = document.createElement('div');
+        row.className = 'history-row';
+        var methodLabel = w.method === 'card' ? 'Bank kartı' : (w.method === 'm10' ? 'm10 · E-Wallet' : 'USDT (TRC-20)');
+        row.innerHTML =
+          '<div><div>' + methodLabel + '</div><div class="date">' + w.date + ' · ' + w.target + '</div></div>' +
+          '<span class="amount" style="color:#ff6b6b;">-₼' + Number(w.amount).toFixed(2) + '</span>';
+        withdrawHistoryEl.appendChild(row);
+      });
+    }
+
+    function showWithdrawMsg(text, ok) {
+      if (!withdrawMsg) return;
+      withdrawMsg.className = 'withdraw-msg ' + (ok ? 'ok' : 'err');
+      withdrawMsg.textContent = text;
+    }
+
+    function doWithdraw() {
+      var amount = parseFloat(withdrawAmountEl.value);
+      var target = (withdrawTargetEl.value || '').trim();
+      var method = withdrawMethodEl.value;
+
+      if (!target) { showWithdrawMsg('Zəhmət olmasa çıxarış detallarını daxil edin.', false); return; }
+      if (isNaN(amount) || amount <= 0) { showWithdrawMsg('Düzgün məbləğ daxil edin.', false); return; }
+      if (amount < 1) { showWithdrawMsg('Minimum çıxarış məbləği 1₼-dır.', false); return; }
+
+      // Backend rejimi: server yoxlayır və Telegram-a hesabat göndərir
+      if (usingBackend) {
+        withdrawBtn.disabled = true;
+        withdrawBtn.textContent = 'Göndərilir...';
+        api.withdraw(amount, method, target)
+          .then(function (resp) {
+            withdrawAmountEl.value = '';
+            withdrawTargetEl.value = '';
+            showWithdrawMsg('✓ Çıxarış sorğunuz qəbul edildi (' + resp.wdId + '). Telegram hesabatı göndərildi!', true);
+            return api.me().then(function (fresh) {
+              totalEarned = fresh.totalEarned;
+              totalBalance = fresh.balance;
+              document.getElementById('totalBalance').textContent = '₼' + fresh.balance.toFixed(2);
+              if (walletBalanceEl) walletBalanceEl.textContent = '₼' + fresh.balance.toFixed(2);
+              renderWithdrawHistory(fresh.withdrawals);
+            });
+          })
+          .catch(function (err) {
+            showWithdrawMsg(err.message || 'Xəta baş verdi.', false);
+          })
+          .finally(function () {
+            withdrawBtn.disabled = false;
+            withdrawBtn.textContent = 'Çıxarış et';
+          });
+        return;
+      }
+
+      // Offline demo rejimi
+      var balance = getWalletBalance();
+      if (amount > balance) { showWithdrawMsg('Balansda kifayət qədər vəsait yoxdur. Əlçatan: ₼' + balance.toFixed(2), false); return; }
+
+      var list = getWithdrawals();
+      list.push({
+        amount: amount,
+        method: method,
+        target: target,
+        date: new Date().toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' }),
+        id: 'WD-' + Math.floor(100000 + Math.random() * 900000)
+      });
+      saveWithdrawals(list);
+
+      withdrawAmountEl.value = '';
+      withdrawTargetEl.value = '';
+      showWithdrawMsg('✓ Çıxarış sorğunuz qəbul edildi! Vəsait 10 dəqiqə ərzində göndəriləcək.', true);
+      renderWallet();
+    }
+
+    if (withdrawBtn) withdrawBtn.addEventListener('click', doWithdraw);
+    if (withdrawMaxBtn) withdrawMaxBtn.addEventListener('click', function () {
+      var balance = usingBackend ? (serverData ? serverData.balance : 0) : getWalletBalance();
+      if (balance < 1) { showWithdrawMsg('Minimum çıxarış üçün balansda 1₼ olmalıdır.', false); return; }
+      withdrawAmountEl.value = balance.toFixed(2);
+    });
+
+    if (usingBackend && serverData) {
+      if (walletBalanceEl) walletBalanceEl.textContent = '₼' + serverData.balance.toFixed(2);
+      renderWithdrawHistory(serverData.withdrawals);
+    } else {
+      renderWallet();
+    }
+
+    setInterval(async function () {
+      if (usingBackend) {
+        try {
+          serverData = await api.me();
+          totalEarned = serverData.totalEarned;
+          totalBalance = serverData.balance;
+          if (serverData.purchases.length) {
+            var activePlan = serverData.purchases[0];
+            plan = { name: activePlan.plan_name, price: activePlan.price, daily: activePlan.daily, activatedAt: activePlan.created_at };
+          } else {
+            plan = { name: 'Aktiv paket yoxdur', price: 0, daily: 0, activatedAt: '' };
+          }
+          document.getElementById('totalBalance').textContent = '₼' + totalBalance.toFixed(2);
+          document.getElementById('totalEarned').textContent = '₼' + totalEarned.toFixed(2);
+          document.getElementById('todayEarning').textContent = '₼' + plan.daily.toFixed(2);
+          document.getElementById('activePlans').textContent = String(serverData.purchases.length);
+          if (planNameEl) planNameEl.textContent = plan.price ? plan.name + ' · ' + plan.price + '₼' : plan.name;
+          if (planMetaEl) planMetaEl.textContent = plan.activatedAt ? 'Aktivləşmə: ' + plan.activatedAt : 'Təsdiqlənmiş paket yoxdur';
+          if (earnRateEl) earnRateEl.textContent = '+₼' + plan.daily.toFixed(2) + ' / gün';
+          if (walletBalanceEl) walletBalanceEl.textContent = '₼' + totalBalance.toFixed(2);
+          renderWithdrawHistory(serverData.withdrawals);
+        } catch (e) {}
+        return;
+      }
+      if (!usingBackend) {
+        var before = totalEarned;
+        applyDailyAccrual();
+        if (before !== totalEarned) {
+          document.getElementById('totalBalance').textContent = '₼' + totalBalance.toFixed(2);
+          document.getElementById('totalEarned').textContent = '₼' + totalEarned.toFixed(2);
+          document.getElementById('todayEarning').textContent = '₼' + plan.daily.toFixed(2);
+          renderWallet();
+        }
+      }
+    }, 60000);
+
+  })();
+</script>
+</body>
+</html>

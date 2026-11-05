@@ -1,0 +1,20 @@
+# Render.com deploy konfiqurasiyası
+# Repo kökündən "render blueprint" kimi istifadə olunur.
+services:
+  - type: web
+    name: nexora-backend
+    env: node
+    plan: free
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: node server.js
+    healthCheckPath: /api/health
+    envVars:
+      - key: TELEGRAM_BOT_TOKEN
+        sync: false      # Render dashboard-da daxil edin
+      - key: TELEGRAM_CHAT_ID
+        sync: false
+      - key: PAYMENT_CARD_NUMBER
+        sync: false
+      - key: PAYMENT_CARDHOLDER
+        sync: false

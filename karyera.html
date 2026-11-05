@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Karyera — Nexora</title>
+<meta name="description" content="Nexora komandasına qoşulun. Açıq vakansiyalar və iş mədəniyyətimiz haqqında." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+<script>window.NEXORA_BACKEND_URL = localStorage.getItem('nexora_backend_url') || '';</script>
+</head>
+<body>
+
+<div class="bg-glow"></div>
+<div class="bg-grid"></div>
+
+<!-- ============ HEADER ============ -->
+<header id="header">
+  <div class="container nav">
+    <a href="index.html" class="logo">
+      <span class="logo-mark">N</span>
+      <span>Nexora</span>
+    </a>
+    <nav class="nav-links" aria-label="Əsas naviqasiya">
+      <a href="index.html#paketler">Paketlər</a>
+      <a href="index.html#nece-isleyir">Necə işləyir</a>
+      <a href="faq.html">FAQ</a>
+      <a href="haqqimizda.html">Haqqımızda</a>
+      <a href="elaqe.html">Əlaqə</a>
+    </nav>
+    <div class="nav-cta">
+      <a href="login.html" class="btn btn-ghost">Daxil ol</a>
+      <a href="index.html#paketler" class="btn btn-primary">Paketi al</a>
+      <button class="menu-btn" id="menuBtn" aria-label="Menyunu aç" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ============ MOBILE MENU ============ -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html#paketler">Paketlər</a>
+  <a href="index.html#nece-isleyir">Necə işləyir</a>
+  <a href="faq.html">FAQ</a>
+  <a href="haqqimizda.html">Haqqımızda</a>
+  <a href="elaqe.html">Əlaqə</a>
+  <a href="login.html">Daxil ol</a>
+  <a href="index.html#paketler" style="color: var(--accent);">Paketi al</a>
+</div>
+
+<main>
+  <!-- ============ PAGE HERO ============ -->
+  <section class="page-hero">
+    <div class="container">
+      <nav class="breadcrumb reveal">
+        <a href="index.html">Ana səhifə</a><span class="sep">/</span><span>Karyera</span>
+      </nav>
+      <h1 class="reveal reveal-delay-1">İşinizi <span class="highlight" style="color: var(--accent);">sevərək</span> edin</h1>
+      <p class="reveal reveal-delay-2">Texnologiyanı dəyişdirən komandaya qoşulun. 20+ istedadlı insanla birlikdə böyük problemləri həll edirik.</p>
+      <div class="hero-actions reveal reveal-delay-3" style="margin-bottom: 0;">
+        <a href="#vakansiyalar" class="btn btn-primary btn-lg">Açıq vakansiyalar</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PERKS ============ -->
+  <section style="padding-top: 40px;">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="badge">Niyə Nexora?</span>
+        <h2>Komandamızın üstünlükləri</h2>
+        <p>Sadə maaşdan əlavə, inkişafınız üçün hər şey.</p>
+      </div>
+      <div class="perks-grid">
+        <article class="perk-card reveal">
+          <h3>Rəqabətli maaş</h3>
+          <p>Bazar səviyyəsindən yuxarı maaş və illik bonus sistemi. Əməyiniz dəyərləndirilir.</p>
+        </article>
+        <article class="perk-card reveal reveal-delay-1">
+          <h3>Uzaqdan iş</h3>
+          <p>Hibrid iş modeli — ofisdən və ya evdən, tam çeviklik.</p>
+        </article>
+        <article class="perk-card reveal reveal-delay-2">
+          <h3>Təhsil büdcəsi</h3>
+          <p>İl ərzində 2000₼ təhsil büdcəsi — kurslar, konfranslar və sertifikatlar üçün.</p>
+        </article>
+        <article class="perk-card reveal">
+          <h3>Tibbi sığorta</h3>
+          <p>Tam tibbi sığorta, stomatologiya daxil olmaqla.</p>
+        </article>
+        <article class="perk-card reveal reveal-delay-1">
+          <h3>Çevik iş qrafiki</h3>
+          <p>İş-həyat balansı bizim üçün vacibdir. Çevik saatlarla işləyin.</p>
+        </article>
+        <article class="perk-card reveal reveal-delay-2">
+          <h3>İnkişaf imkanları</h3>
+          <p>Daxili mühazirələr, mentorluq proqramı və sürətli karyera pillələri.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ OPEN POSITIONS ============ -->
+  <section id="vakansiyalar" style="background: var(--bg-soft); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="badge">Vakansiyalar</span>
+        <h2>Açıq mövqelər</h2>
+        <p>6 açıq vakansiya var. Özünüzə uyğun olanı tapdınız? Dərhal müraciət edin.</p>
+      </div>
+      <div class="jobs-list">
+        <article class="job-card reveal">
+          <div>
+            <h3>Senior Frontend Engineer</h3>
+            <div class="job-meta">
+              <span class="job-tag">İnkişaf</span>
+              <span>Hybrid · Bakı</span>
+              <span>₼4000–6000</span>
+            </div>
+          </div>
+          <a href="elaqe.html" class="btn btn-primary">Müraciət edin</a>
+        </article>
+        <article class="job-card reveal reveal-delay-1">
+          <div>
+            <h3>Backend Engineer (Python)</h3>
+            <div class="job-meta">
+              <span class="job-tag">İnkişaf</span>
+              <span>Remote · AZ</span>
+              <span>₼3500–5500</span>
+            </div>
+          </div>
+          <a href="elaqe.html" class="btn btn-primary">Müraciət edin</a>
+        </article>
+        <article class="job-card reveal reveal-delay-2">
+          <div>
+            <h3>Fintech Mütəxəssisi</h3>
+            <div class="job-meta">
+              <span class="job-tag">Maliyyə</span>
+              <span>Hybrid · Bakı</span>
+              <span>₼3000–4500</span>
+            </div>
+          </div>
+          <a href="elaqe.html" class="btn btn-primary">Müraciət edin</a>
+        </article>
+        <article class="job-card reveal">
+          <div>
+            <h3>Product Designer (UI/UX)</h3>
+            <div class="job-meta">
+              <span class="job-tag">Dizayn</span>
+              <span>Hybrid · Bakı</span>
+              <span>₼3000–4500</span>
+            </div>
+          </div>
+          <a href="elaqe.html" class="btn btn-primary">Müraciət edin</a>
+        </article>
+        <article class="job-card reveal reveal-delay-1">
+          <div>
+            <h3>DevOps Engineer</h3>
+            <div class="job-meta">
+              <span class="job-tag">İnkişaf</span>
+              <span>Remote · AZ</span>
+              <span>₼3500–5000</span>
+            </div>
+          </div>
+          <a href="elaqe.html" class="btn btn-primary">Müraciət edin</a>
+        </article>
+        <article class="job-card reveal reveal-delay-2">
+          <div>
+            <h3>Customer Support Specialist</h3>
+            <div class="job-meta">
+              <span class="job-tag">Dəstək</span>
+              <span>Hybrid · Bakı</span>
+              <span>₼1500–2200</span>
+            </div>
+          </div>
+          <a href="elaqe.html" class="btn btn-primary">Müraciət edin</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CTA ============ -->
+  <section>
+    <div class="container">
+      <div class="cta-box reveal">
+        <h2>İdeal işinizi tapmadınız?</h2>
+        <p>CV-nizi göndərin — gələcək vakansiyalar üçün sizinlə əlaqə saxlayacağıq.</p>
+        <div class="cta-actions">
+          <a href="elaqe.html" class="btn btn-primary btn-lg">CV göndərin</a>
+          <a href="haqqimizda.html" class="btn btn-ghost btn-lg">Komandamızla tanış olun</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo">
+          <span class="logo-mark">N</span>
+          <span>Nexora</span>
+        </a>
+        <p>Gündəlik gəlir əldə etməyin sadə və etibarlı yolu. Paket seçin, investisiya edin, hər gün qazanın.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Platforma</h4>
+        <a href="index.html#paketler">Paketlər</a>
+        <a href="index.html#nece-isleyir">Necə işləyir</a>
+        <a href="faq.html">FAQ</a>
+      </div>
+      <div class="footer-col">
+        <h4>Şirkət</h4>
+        <a href="haqqimizda.html">Haqqımızda</a>
+        <a href="karyera.html">Karyera</a>
+        <a href="elaqe.html">Əlaqə</a>
+      </div>
+      <div class="footer-col">
+        <h4>Əlaqə</h4>
+        <a href="elaqe.html">hello@nexora.az</a>
+        <a href="elaqe.html">+994 12 555 55 55</a>
+        <a href="elaqe.html">Nizami küç. 180, Bakı</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© <span id="year">2026</span> Nexora. Bütün hüquqlar qorunur.</p>
+      <p><a href="mexfilik.html">Məxfilik siyasəti</a> &nbsp;·&nbsp; <a href="istifade-sertleri.html">İstifadə şərtləri</a></p>
+    </div>
+  </div>
+</footer>
+
+<script src="api.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+# Lazımsız fayllar
+node_modules/
+*.log
+*.db-shm
+*.db-wal
+.DS_Store
+Thumbs.db
+
+# Local DB (yedek kimi saxlayın, repoya qoşmayın)
+backend/nexora.db
+
+# Secrets — config.json-da tokenlar ola bilər
+backend/config.json
