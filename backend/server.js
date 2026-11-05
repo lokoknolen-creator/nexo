@@ -22,7 +22,16 @@ app.use(express.json({ limit: '8mb' }));
 
 // Serve the static site from the parent directory
 const SITE_ROOT = path.join(__dirname, '..');
-app.use(express.static(SITE_ROOT));
+// Block sensitive paths BEFORE static serving (config.json, DB files, etc.)
+const BLOCKED = [/^\/backend\/(config\.json|nexora\.db|nexora\.db-shm|nexora\.db-wal|test-telegram\.js)$/i, /\.(db|db-shm|db-wal)$/i];
+app.use(function (req, res, next) {
+  var p = decodeURIComponent((req.path || '').toLowerCase());
+  if (BLOCKED.some(function (rx) { return rx.test(p); })) {
+    return res.status(403).send('Forbidden');
+  }
+  next();
+});
+app.use(express.static(SITE_ROOT, { dotfiles: 'ignore' }));
 
 // ---------- DATABASE ----------
 const db = new Database(path.join(__dirname, 'nexora.db'));

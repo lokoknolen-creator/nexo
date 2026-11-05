@@ -576,6 +576,8 @@ textarea.form-input { resize: vertical; min-height: 120px; }
 .history-row .date { color: var(--text-dim); font-size: 13px; }
 .history-row .amount { font-weight: 800; background: var(--grad); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 
+.grad-text { background: var(--grad); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+
 /* ---------- LEGAL ---------- */
 .legal { max-width: 720px; margin: 0 auto; }
 .legal p, .legal li { color: var(--text-dim); font-size: 15px; margin-bottom: 16px; }

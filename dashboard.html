@@ -55,7 +55,7 @@
 <section class="dash-section">
   <div class="container">
     <div class="dash-head reveal visible">
-      <h1>Xoş gəldiniz, <span style="color: var(--accent);">Elvin!</span></h1>
+      <h1>Xoş gəldiniz, <span class="grad-text" id="dashUserName">Elvin!</span></h1>
       <div class="user-chip">
         <span class="dash-avatar">E</span>
         Elvin Məmmədov
@@ -94,7 +94,7 @@
           <div class="wallet-balance-amount" id="walletBalance">₼0.00</div>
           <div class="wallet-balance-sub">Çıxarış üçün əlçatan — minimum 1₼</div>
         </div>
-        <span class="tag" style="font-size:12px; font-weight:700; padding:6px 14px; border-radius:999px; background:rgba(200,240,76,.12); border:1px solid rgba(200,240,76,.3); color:var(--accent);">CANLI</span>
+        <span class="tag" style="font-size:12px; font-weight:700; padding:6px 14px; border-radius:999px; background:rgba(167,139,250,.12); border:1px solid rgba(167,139,250,.3); color:var(--accent-strong);">CANLI</span>
       </div>
 
       <div class="withdraw-grid">
@@ -127,30 +127,13 @@
       <div class="withdraw-hint">Çıxarış sorğuları orta hesabla 10 dəqiqə ərzində emal edilir. Komissiya: 0₼.</div>
     </div>
 
-    <div class="wallet-panel telegram-panel reveal visible" id="telegramPanel">
-      <div class="wallet-balance-row">
-        <div>
-          <h3>Telegram bildirişləri</h3>
-          <div class="wallet-balance-sub" id="telegramStatus">Telegram hesabı qoşulmayıb.</div>
-        </div>
-        <div class="withdraw-actions">
-          <button class="btn btn-primary" id="telegramCodeBtn" type="button">Telegram kodu al</button>
-          <button class="btn btn-ghost" id="telegramDisconnectBtn" type="button" hidden>Ayır</button>
-        </div>
-      </div>
-      <div id="telegramCodeBox" class="telegram-code-box" hidden>
-        <code id="telegramCode"></code>
-        <a id="telegramBotLink" class="btn btn-ghost" href="#" target="_blank" rel="noopener noreferrer">Botu aç</a>
-        <div class="withdraw-hint">Botda /start yazın, sonra bu kodu ona göndərin. Kod 15 dəqiqə qüvvədədir.</div>
-      </div>
-      <div class="withdraw-msg" id="telegramMsg" role="status" aria-live="polite"></div>
-    </div>
+    <!-- Telegram bildirişləri arxa planda göndərilir (interfeysdə göstərilmir) -->
 
     <div class="dash-cards">
       <!-- Active plans -->
       <div class="dash-panel reveal visible">
         <h3>Aktiv paketlərim</h3>
-        <div class="active-plan">
+        <div class="active-plan" id="activePlanDemo">
           <div>
             <div class="plan-name">Standart · 30₼</div>
             <div class="plan-meta">Aktivləşmə: 12 Avqust 2026</div>
@@ -169,35 +152,6 @@
         <h3>Çıxarış tarixçəsi</h3>
         <div id="withdrawHistoryEmpty" style="font-size: 14px; color: var(--text-dim); padding: 20px 0; text-align: center;">Hələ çıxarış etməmisiniz. Yuxarıdakı cüzdandan ilk çıxarışınızı edin.</div>
         <div id="withdrawHistory"></div>
-      </div>
-        <div class="history-row">
-          <div>
-            <div>Gündəlik gəlir</div>
-            <div class="date">13 Avqust 2026 · 00:00</div>
-          </div>
-          <span class="amount">+₼5.00</span>
-        </div>
-        <div class="history-row">
-          <div>
-            <div>Gündəlik gəlir</div>
-            <div class="date">12 Avqust 2026 · 00:00</div>
-          </div>
-          <span class="amount">+₼5.00</span>
-        </div>
-        <div class="history-row">
-          <div>
-            <div>Gündəlik gəlir</div>
-            <div class="date">11 Avqust 2026 · 00:00</div>
-          </div>
-          <span class="amount">+₼5.00</span>
-        </div>
-        <div class="history-row">
-          <div>
-            <div>Gündəlik gəlir</div>
-            <div class="date">10 Avqust 2026 · 00:00</div>
-          </div>
-          <span class="amount">+₼5.00</span>
-        </div>
       </div>
     </div>
   </div>
@@ -305,7 +259,7 @@
       try {
         serverData = await api.me();
         // User name in header
-        var nameEl = document.querySelector('.dash-head h1 span');
+        var nameEl = document.getElementById('dashUserName');
         var chipEl = document.querySelector('.user-chip');
         var first = (serverData.user.fullname || '').split(' ')[0] || 'İstifadəçi';
         if (nameEl) nameEl.textContent = first + '!';
@@ -347,10 +301,7 @@
     if (planMetaEl) planMetaEl.textContent = plan.activatedAt ? 'Aktivləşmə: ' + plan.activatedAt : 'Təsdiqlənmiş paket yoxdur';
     if (earnRateEl) earnRateEl.textContent = '+₼' + (plan.daily || 0) + ' / gün';
 
-    // Sync history rows with the purchased plan's daily rate
-    document.querySelectorAll('.history-row .amount').forEach(function (el) {
-      el.textContent = '+₼' + (plan.daily || 0).toFixed(2);
-    });
+    // Demo tarixçə sətirləri silindi — real tarixçə renderWithdrawHistory ilə çəkilir
 
     // ---------- WALLET / WITHDRAW ----------
     var WITHDRAW_KEY = 'nexora_withdrawals';
@@ -363,59 +314,20 @@
     var withdrawMsg = document.getElementById('withdrawMsg');
     var withdrawHistoryEl = document.getElementById('withdrawHistory');
     var withdrawHistoryEmpty = document.getElementById('withdrawHistoryEmpty');
-    var telegramCodeBtn = document.getElementById('telegramCodeBtn');
-    var telegramDisconnectBtn = document.getElementById('telegramDisconnectBtn');
-    var telegramCodeBox = document.getElementById('telegramCodeBox');
-    var telegramCodeEl = document.getElementById('telegramCode');
-    var telegramBotLink = document.getElementById('telegramBotLink');
-    var telegramStatusEl = document.getElementById('telegramStatus');
-    var telegramMsg = document.getElementById('telegramMsg');
+    // Telegram interfeysi silindi — bildirişlər arxa planda (backend) göndərilir
+    var telegramCodeBtn = null;
+    var telegramDisconnectBtn = null;
+    var telegramCodeBox = null;
+    var telegramCodeEl = null;
+    var telegramBotLink = null;
+    var telegramStatusEl = null;
+    var telegramMsg = null;
 
-    function showTelegramMessage(text, ok) {
-      if (!telegramMsg) return;
-      telegramMsg.className = 'withdraw-msg ' + (ok ? 'ok' : 'err');
-      telegramMsg.textContent = text;
-    }
+    function showTelegramMessage() { /* interfeys yoxdur — xəbərdarlıq lazım deyil */ }
 
-    function setTelegramConnected(connected) {
-      if (telegramStatusEl) telegramStatusEl.textContent = connected ? 'Telegram hesabı qoşulub.' : 'Telegram hesabı qoşulmayıb.';
-      if (telegramCodeBtn) telegramCodeBtn.hidden = connected;
-      if (telegramDisconnectBtn) telegramDisconnectBtn.hidden = !connected;
-      if (telegramCodeBox) telegramCodeBox.hidden = true;
-    }
+    function setTelegramConnected() { /* interfeys yoxdur */ }
 
-    setTelegramConnected(!!(serverData && serverData.user && serverData.user.telegram_chat_id));
-
-    if (telegramCodeBtn) telegramCodeBtn.addEventListener('click', async function () {
-      telegramCodeBtn.disabled = true;
-      showTelegramMessage('Kod hazırlanır...', true);
-      try {
-        var result = await api.telegramStart();
-        if (!result.botUsername) throw new Error('Telegram bot adı serverdə konfiqurasiya edilməyib.');
-        if (telegramCodeEl) telegramCodeEl.textContent = result.code;
-        if (telegramBotLink) telegramBotLink.href = 'https://t.me/' + result.botUsername;
-        if (telegramCodeBox) telegramCodeBox.hidden = false;
-        if (telegramStatusEl) telegramStatusEl.textContent = 'Botda /start yazın, sonra göstərilən kodu göndərin.';
-        showTelegramMessage('Birdəfəlik kod yaradıldı.', true);
-      } catch (error) {
-        showTelegramMessage(error.message || 'Telegram kodu alınmadı.', false);
-      } finally {
-        telegramCodeBtn.disabled = false;
-      }
-    });
-
-    if (telegramDisconnectBtn) telegramDisconnectBtn.addEventListener('click', async function () {
-      telegramDisconnectBtn.disabled = true;
-      try {
-        await api.telegramDisconnect();
-        setTelegramConnected(false);
-        showTelegramMessage('Telegram hesabı ayrıldı.', true);
-      } catch (error) {
-        showTelegramMessage(error.message || 'Telegram hesabı ayrılmadı.', false);
-      } finally {
-        telegramDisconnectBtn.disabled = false;
-      }
-    });
+    setTelegramConnected();
 
     function getWithdrawals() {
       try { return JSON.parse(localStorage.getItem(WITHDRAW_KEY) || '[]'); } catch (e) { return []; }
@@ -475,7 +387,7 @@
       if (isNaN(amount) || amount <= 0) { showWithdrawMsg('Düzgün məbləğ daxil edin.', false); return; }
       if (amount < 1) { showWithdrawMsg('Minimum çıxarış məbləği 1₼-dır.', false); return; }
 
-      // Backend rejimi: server yoxlayır və Telegram-a hesabat göndərir
+      // Backend rejimi: server çıxarışı qeydə alır və Telegram-a arxa planda bildiriş göndərir
       if (usingBackend) {
         withdrawBtn.disabled = true;
         withdrawBtn.textContent = 'Göndərilir...';
@@ -483,7 +395,7 @@
           .then(function (resp) {
             withdrawAmountEl.value = '';
             withdrawTargetEl.value = '';
-            showWithdrawMsg('✓ Çıxarış sorğunuz qəbul edildi (' + resp.wdId + '). Telegram hesabatı göndərildi!', true);
+            showWithdrawMsg('✓ Çıxarış sorğunuz qəbul edildi (' + resp.wdId + ').', true);
             return api.me().then(function (fresh) {
               totalEarned = fresh.totalEarned;
               totalBalance = fresh.balance;
